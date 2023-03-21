@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>My Data</title>
+    <style>
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 10px;
+            border: 1px solid black;
+            padding: 10px;
+        }
+
+        .grid-item {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .contaner {
+            display: flex;
+            width: 100%;
+            height: auto;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .data {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .data td,
+        th {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .data th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .card {
+
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            display: inline-block;
+            width: 200px;
+            height: 300px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .card h2 {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        .card p {
+            font-size: 10px;
+            color: #888;
+        }
+
+        .card-content {
+            padding: 10px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+    <h1>Top 100 Popular items</h1>
+
+    {% set co = 1 %}
+    {% for image in images%}
+    {% set co = loop.index %}
+    {% if co % 3 == 1 %}
+    <div class="grid">
+        {% endif %}
+        <form action="" ,method="get">
+            <div class="grid-item">
+                <div class="card" id="{{image['id']}}" onclick="get_id(this.id)">
+                    <img src="{{ image['src']}}" alt="{{ image['title'] }}">
+                    {% set co = loop.index %}
+                    <p>{{ co }}: </p>
+                    <h2>{{ image['title'] }}</h2>
+                    <div class="card-content ">
+                        <p id="my-paragraph">{{ image['description'] }}</p>
+                        <p>{{leng}}</p>
+                    </div>
+                </div>
+            </div>
+        </form>
+        {% if co % 3 == 0 or co == 15 %}
+    </div>
+    {% endif %}
+    {% endfor %}
+
+
+    <script>
+        function get_id(id) {
+            console.log(id)
+            window.location.href = "{{ url_for('single') }}?param=" + id;
+        }
+    </script>
+</body>
+
+</html>
